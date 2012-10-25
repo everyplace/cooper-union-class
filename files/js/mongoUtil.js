@@ -8,15 +8,22 @@ var mongoUtil = {
 			this['_'+key] = configuration[key];
 		};
 	},
-	url: function() {
+	_url: function() {
 		return 'https://www.mongolab.com/api/1/databases/'+this._appID+'/collections/'+this._db+'?apiKey='+this._apiKey;
 	},
 	post: function(id, data, callback) {
+
+		this._exists(id, function(){this._postExecute(id, data);});
+			
+	},
+	_postExecute: function(id, data, response, callback){
+		console.log("_postExecute");
 		var obj = {};
 		obj[id] = data;
 		var formattedData = JSON.stringify(obj);
+
 		$.ajax({
-			url:this.url(),
+			url:this._url(),
 			dataType:'json',
 			contentType:'application/json',
 			type:'POST',
@@ -33,17 +40,46 @@ var mongoUtil = {
 				console.log("failure",error);
 			}
 		
-		});				
+		});	
+
+	},
+	_exists: function(id, data, callback){
+		$.ajax({
+
+			url:this._url(),
+			dataType:'json',
+			contentType:'application/json',
+			type:'GET',
+			success:function(response, response, jqXHR){
+
+				if(!response[id]) {
+					console.log(id);
+					if(typeof(callback) === "function") {
+						callback(id, data, response);
+						console.log("_exists callback");
+					} else{
+						console.log("callback not valid:", callback, typeof(callback));
+					}					
+					
+				};
+
+			},
+			error: function(error) {
+				console.log("failure",error);
+			}
+	
+		});
 	},
 	get: function(id, callback) {
 		$.ajax({
 
-			url:this.url(),
+			url:this._url(),
 			dataType:'json',
 			contentType:'application/json',
 			type:'GET',
 			success:function(response){
 				
+
 				console.log("success",response);
 				$("<h2>"+response.length+"</h2>").appendTo("h1");
 			},
