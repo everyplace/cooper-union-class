@@ -1,0 +1,27 @@
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+
+	$(document).ready(function(){
+	
+		var consumer_key = '',
+			consumer_secret = '',
+			access_token_key = '',
+			access_token_secret = '',
+			tweetID = '';
+		
+	
+		$.getJSON('http://rocky-scrubland-6021.herokuapp.com/?consumer_key='+consumer_key+
+				  '&consumer_secret='+consumer_secret+
+				  '&access_token_key='+access_token_key+
+				  '&access_token_secret='+access_token_secret+
+				  '&tweetID='+tweetID,
+				  
+			function(response){
+				console.log(response);	
+			}
+		);
+	
+	});
+
+
+</script>
