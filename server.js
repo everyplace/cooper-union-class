@@ -12,7 +12,7 @@ var twit = new twitter({
     access_token_secret: ''
 });
 
-app.get('/' function(req, res){
+app.get('/', function(req, res){
 	
 	var tweetID = req.query['tweetID'];
 	twit.get('/statuses/retweets/'+tweetID+'.json', {include_entities:true}, function(data) {
