@@ -5,14 +5,15 @@ var twitter = require('twitter');
 
 var app = express();
 
-var twit = new twitter({
-    consumer_key: '',
-    consumer_secret: '',
-    access_token_key: '',
-    access_token_secret: ''
-});
 
 app.get('/', function(req, res){
+
+	var twit = new twitter({
+		consumer_key: req.query['consumer_key'],
+		consumer_secret: req.query['consumer_secret'],
+		access_token_key: req.query['access_token_key'],
+		access_token_secret: req.query['access_token_secret']
+	});
 	
 	var tweetID = req.query['tweetID'];
 	twit.get('/statuses/retweets/'+tweetID+'.json', {include_entities:true}, function(data) {
