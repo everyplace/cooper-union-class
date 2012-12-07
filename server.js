@@ -12,9 +12,18 @@ var twit = new twitter({
     access_token_secret: ''
 });
 
-twit.get('/statuses/retweets/273795885580816384.json', {include_entities:true}, function(data) {
-    console.log(util.inspect(data));
+app.get('/' function(req, res){
+	
+	var tweetID = req.query['tweetID'];
+	twit.get('/statuses/retweets/'+tweetID+'.json', {include_entities:true}, function(data) {
+		console.log(util.inspect(data));
+		res.send(twitterResponse);	
+	});
+	
+
+
 });
+
 
 
 app.listen(parseInt(process.env.PORT || 80));
