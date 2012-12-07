@@ -26,6 +26,7 @@ app.get('/', function(req, res){
 	var tweetID = req.query['tweetID'];
 	twit.get('/statuses/retweets/'+tweetID+'.json', {include_entities:true}, function(data) {
 		console.log(util.inspect(data));
+		res.setHeader('Access-Control-Allow-Origin','*');
 		res.send(data);	
 	});
 	
